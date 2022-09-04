@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Analitica de negocios - obj 03</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 text-center py-4 bg-info text-light">
+                <h1>Formulario de prediccion objetivo 03</h1>
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <a name="" id="" class="btn btn-secondary" href="./index.html" role="button">Regresar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form class="row py-3 px-5">
+          <div class="form-group col-md-4">
+              <label for="departamento" class="col-form-label">Departamento</label>
+              <div class="col-12">
+                  <select type="text" class="form-control" name="departamento" id="departamento">
+                    
+                  </select>
+              </div>
+
+          </div>
+          <div class="form-group col-md-4">
+              <label for="provincia" class="col-form-label">Provincia</label>
+              <div class="col-12">
+                  <select type="text" class="form-control" name="provincia" id="provincia" disabled>
+                    
+                  </select>
+              </div>
+          </div>
+          <div class="form-group col-md-4">
+              <label for="distrito" class="col-form-label">Distrito</label>
+              <div class="col-12">
+                  <select type="text" class="form-control" name="distrito" id="distrito" disabled>
+                    
+                  </select>
+              </div>
+          </div>
+          <div class="form-group col-md-3">
+              <label for="edad" class="col-form-label">Grupos de edad</label>
+              <div class="col-12">
+                  <select type="text" class="form-control" name="edad" id="edad" disabled>
+                    
+                  </select>
+              </div>
+          </div>
+          <div class="form-group col-md-3">
+              <label for="dosis" class="col-form-label">Numero de dosis</label>
+              <div class="col-12">
+                  <select type="text" class="form-control" name="dosis" id="dosis" disabled>
+                    
+                  </select>
+              </div>
+          </div>
+          <div class="form-group col-md-3">
+              <label for="mes" class="col-form-label">Mes</label>
+              <div class="col-12">
+                <select type="text" class="form-control" name="mes" id="mes" disabled>
+                  
+                </select>
+              </div>
+          </div>
+          <div class="form-group col-md-3">
+              <label for="quincena" class="col-form-label">Quincena</label>
+              <div class="col-12">
+                <select type="text" class="form-control" name="quincena" id="quincena" disabled>
+                  
+                </select>
+              </div>
+          </div>
+          <div class="form-group col-12 my-2">
+              <a id="botongrafico" onclick="llenarDatosGrafico();" class="btn btn-primary">Generar Grafico</a>
+          </div>
+      </form>
+      <div class="row mb-3">
+        <div class="col-11 mx-auto" style="height: 60vh;">
+          <canvas id="myChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="./PapaParse-5.0.2/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+
+      departamento = document.getElementById('departamento');
+      provincia = document.getElementById('provincia');
+      distrito = document.getElementById('distrito');
+      edad = document.getElementById('edad');
+      ladosis = document.getElementById('dosis');
+      mes = document.getElementById('mes');
+      quincena = document.getElementById('quincena');
+      botongrafico = document.getElementById('botongrafico');
+      grafica = document.getElementById('myChart')
+
+      departamentos=[];
+      provincias=[];
+      distritos=[];
+      edades=[];
+      dosis=[];
+      meses=[];
+      quincenas=[];
+      valoracion=[];
+      datos=[];
+      datosGrafico = [];
+      controlado=[];
+      bajo=[];
+      medio=[];
+      alto=[];
+      muyalto=[];
+      datosFiltrados=[];
+
+      data={};
+      config={};
+      const url = 'OBJ3_PREDICCION_COMPLETO.csv';
+      Papa.parse(url, {
+          download: true,
+          header: true,
+          dynamicTyping: true,
+          complete: function(results) {
+            datos = results.data;
+            llenarDepartamento(datos);
+            departamento.addEventListener('change', function(){
+              (departamento.value!="")?(llenarCampoDependiente(datos, [[departamento,'Departamento']], provincia, provincias ,'Provincia'))
+              :(limpiarCampos([provincia]))
+              provincias=[], distritos=[], edades=[], dosis=[], meses=[], quincenas = [];
+              limpiarCampos([distrito, edad, ladosis, mes, quincena]);
+            });
+            provincia.addEventListener('change', function(){
+              (provincia.value!="")?(llenarCampoDependiente(datos, [[departamento,'Departamento'],[provincia, 'Provincia']], distrito, distritos,'Distrito'))
+              :(limpiarCampos([distrito]))
+              distritos=[], edades=[], dosis=[], meses=[], quincenas = [];
+              limpiarCampos([edad, ladosis, mes, quincena]);
+            });
+            distrito.addEventListener('change', function(){
+              (distrito.value!="")?(llenarCampoDependiente(datos, [[departamento,'Departamento'],[provincia, 'Provincia'],[distrito, 'Distrito']], edad, edades,'G_EDAD'))
+              :(limpiarCampos([edad]))
+              edades=[], dosis=[], meses=[], quincenas = [];
+              limpiarCampos([ladosis, mes, quincena]);
+            });
+            edad.addEventListener('change', function(){
+              (edad.value!="")?(llenarCampoDependiente(datos, [[departamento,'Departamento'],[provincia, 'Provincia'],[distrito, 'Distrito'],[edad, 'G_EDAD']], ladosis, dosis,'numVacunas'))
+              :(limpiarCampos([ladosis]))
+              dosis=[], meses=[], quincenas = [];
+              limpiarCampos([mes, quincena]);
+            });
+            ladosis.addEventListener('change', function(){
+              (ladosis.value!="")?(llenarCampoDependiente(datos, [[departamento,'Departamento'],[provincia, 'Provincia'],[distrito, 'Distrito'],[edad, 'G_EDAD'],[ladosis, 'numVacunas']], mes, meses,'MES'))
+              :(limpiarCampos([mes]))
+              meses=[], quincenas = [];
+              limpiarCampos([quincena]);
+            });
+            mes.addEventListener('change', function(){
+              (mes.value!="")?(llenarCampoDependiente(datos, [[departamento,'Departamento'],[provincia, 'Provincia'],[distrito, 'Distrito'],[edad, 'G_EDAD'],[ladosis, 'numVacunas'],[mes, 'MES']], quincena, quincenas,'QUINCENA'))
+              :(limpiarCampos([quincena]))
+              quincenas=[];
+            });
+          }
+      });
+
+      function limpiarCampos(vector) {
+        vector.forEach(element => {
+          element.innerHTML="";
+          element.disabled = true;
+        });
+      }
+
+      function llenarDepartamento(datos) {
+        for (let i = 0; i < datos.length; i++) {
+              if (!departamentos.includes(datos[i].Departamento)) {
+                departamentos.push(datos[i].Departamento);
+              }
+            }
+        departamentos.sort();
+        departamento.innerHTML =`<option value="">Seleccionar</option>`
+        for (let i = 0; i < departamentos.length; i++) {
+          departamento.innerHTML += `<option value="${departamentos[i]}">${departamentos[i]}</option>`;
+        }
+      }
+      function verificarRecursivo(item, vector) {
+        if (vector.length == 0) {
+          return true;
+        } else {
+          if (item[vector[0][1]] == vector[0][0].value && verificarRecursivo(item, vector.slice(1))) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      }
+      
+      function llenarCampoDependiente(datos,camposSuperiores,campoInferior,vector,nombreAtributovectorInferior) {
+        datos.filter((item) => {
+            if (verificarRecursivo(item,camposSuperiores) ) {
+              if (!vector.includes(item[nombreAtributovectorInferior])) {
+                vector.push(item[nombreAtributovectorInferior]);
+              }
+            }
+        });
+        !isNaN(vector[0])?vector.sort((a,b)=>a-b):vector.sort();
+       campoInferior.innerHTML =`<option value="">Seleccionar</option>`
+        for (let i = 0; i < vector.length; i++) {
+          campoInferior.innerHTML += `<option value="${vector[i]}">${vector[i]}</option>`;
+        }
+        campoInferior.disabled = false;
+      }
+
+      //GRAFICA*********************************************************************************************************************
+      function llenarDatosGrafico(){
+        datosGrafico = [];
+        controlado=[];
+        bajo=[];
+        medio=[];
+        alto=[];
+        muyalto=[];
+        datosFiltrados=[];
+        
+        datos.filter((item) => {
+          if (
+            item.Departamento == departamento.value && 
+            item.Provincia == provincia.value && 
+            item.Distrito == distrito.value && 
+            item.G_EDAD == edad.value && 
+            item.numVacunas == ladosis.value && 
+            item.MES == mes.value && 
+            item.QUINCENA == quincena.value
+            ) {
+            datosGrafico.push(item);
+          }
+        });
+
+        datosGrafico.filter((item) => {
+          if (item.Valoracion_Riesgo == 'Controlado') {
+            controlado.push(item);
+          }
+          if (item.Valoracion_Riesgo == 'Bajo') {
+            bajo.push(item);
+          }
+          if (item.Valoracion_Riesgo == 'Medio') {
+            medio.push(item);
+          }
+          if (item.Valoracion_Riesgo == 'Alto') {
+            alto.push(item);
+          }
+          if (item.Valoracion_Riesgo == 'Muy Alto') {
+            muyalto.push(item);
+          }
+        });
+        datosFiltrados.push(controlado.length,bajo.length,medio.length,alto.length,muyalto.length);
+
+        const labels = [
+          "Controlado",
+          "Bajo",
+          "Medio",
+          "Alto",
+          "Muy Alto",
+        ];
+        data = {
+        labels: labels,
+        datasets: [{
+            label: 'Datos',
+            backgroundColor: [
+              'rgb(0, 230, 230)',
+              'rgb(127, 230, 0)',
+              'rgb(230, 230, 0)',
+              'rgb(230, 127, 0)',
+              'rgb(230, 0, 0)'
+            ],
+            borderColor: 'rgb(255, 255, 255)',
+            hoverOffset: 4,
+            data: datosFiltrados,
+        }]
+        };
+        config = {
+        type: 'pie',
+        data,
+        options: {
+            responsive:true,
+            maintainAspectRatio:false,
+            plugins: {
+              title:{
+                display:true,
+                text:'NIVELES DE RIESGO',
+              },
+            }
+          }
+        }
+        generarGrafico();
+      }
+      function generarGrafico() {
+        if (window.grafico) {
+          window.grafico.clear();
+          window.grafico.destroy();
+        }
+        window.grafico = new Chart(
+            grafica,
+            config
+          );
+          console.log(datosFiltrados);
+        }
+    </script>
+  </body>
+</html>
