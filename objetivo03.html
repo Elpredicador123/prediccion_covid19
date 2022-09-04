@@ -80,9 +80,33 @@
               <a id="botongrafico" onclick="llenarDatosGrafico();" class="btn btn-primary">Generar Grafico</a>
           </div>
       </form>
-      <div class="row mb-3">
+      <div class="row mb-3" id="grafico_01">
         <div class="col-11 mx-auto" style="height: 60vh;">
           <canvas id="myChart"></canvas>
+        </div>
+      </div>
+      <div class="row mb-3" id="tabla" style="display:none;">
+        <div class="col-11 mx-auto" >
+          <table class="table">
+            <thead>
+              <tr>
+                <th>GRUPOS</th>
+                <th>NVACUNAS</th>
+                <th>MESES</th>
+                <th>QUINCENA</th>
+                <th>NIVEL RIESGO</th>
+              </tr>
+            </thead>
+            <tbody id="detalletabla">
+              <tr>
+                <td scope="row">132</td>
+                <td>132</td>
+                <td>132</td>
+                <td>132</td>
+                <td>132</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -101,6 +125,8 @@
       quincena = document.getElementById('quincena');
       botongrafico = document.getElementById('botongrafico');
       grafica = document.getElementById('myChart')
+      tabla = document.getElementById('tabla')
+      detalletabla = document.getElementById('detalletabla')
 
       departamentos=[];
       provincias=[];
@@ -118,6 +144,7 @@
       alto=[];
       muyalto=[];
       datosFiltrados=[];
+      datosTabla=[];
 
       data={};
       config={};
@@ -128,6 +155,7 @@
           dynamicTyping: true,
           complete: function(results) {
             datos = results.data;
+            console.log(datos[50000]);
             llenarDepartamento(datos);
             departamento.addEventListener('change', function(){
               (departamento.value!="")?(llenarCampoDependiente(datos, [[departamento,'Departamento']], provincia, provincias ,'Provincia'))
@@ -186,6 +214,7 @@
           departamento.innerHTML += `<option value="${departamentos[i]}">${departamentos[i]}</option>`;
         }
       }
+
       function verificarRecursivo(item, vector) {
         if (vector.length == 0) {
           return true;
@@ -223,20 +252,72 @@
         alto=[];
         muyalto=[];
         datosFiltrados=[];
-        
+        datosTabla=[];
+
         datos.filter((item) => {
+          //todos los campos
           if (
-            item.Departamento == departamento.value && 
-            item.Provincia == provincia.value && 
-            item.Distrito == distrito.value && 
-            item.G_EDAD == edad.value && 
-            item.numVacunas == ladosis.value && 
-            item.MES == mes.value && 
-            item.QUINCENA == quincena.value
-            ) {
-            datosGrafico.push(item);
+            departamento.value!="" &&
+            provincia.value!="" &&
+            distrito.value!="" &&
+            edad.value!="" &&
+            ladosis.value!="" &&
+            mes.value!="" &&
+            quincena.value!=""
+             ) {
+            if (
+              item.Departamento == departamento.value &&
+              item.Provincia == provincia.value &&
+              item.Distrito == distrito.value &&
+              item.G_EDAD == edad.value &&
+              item.numVacunas == ladosis.value &&
+              item.MES == mes.value &&
+              item.QUINCENA == quincena.value
+              ) {
+                datosGrafico.push(item);
+            }
+          }
+          //hasta numero de dosis
+          if (
+            departamento.value!="" &&
+            provincia.value!="" &&
+            distrito.value!="" &&
+            edad.value!="" &&
+            ladosis.value!="" &&
+            mes.value=="" &&
+            quincena.value==""
+             ) {
+            if (
+              item.Departamento == departamento.value &&
+              item.Provincia == provincia.value &&
+              item.Distrito == distrito.value &&
+              item.G_EDAD == edad.value &&
+              item.numVacunas == ladosis.value
+              ) {
+                datosGrafico.push(item);
+            }
+          }
+          //hasta distrito
+          if (
+            departamento.value!="" &&
+            provincia.value!="" &&
+            distrito.value!="" &&
+            edad.value=="" &&
+            ladosis.value=="" &&
+            mes.value=="" &&
+            quincena.value==""
+             ) {
+            if (
+              item.Departamento == departamento.value &&
+              item.Provincia == provincia.value &&
+              item.Distrito == distrito.value
+              ) {
+                datosGrafico.push(item);
+                datosTabla.push(item);
+            }
           }
         });
+        console.log(datosTabla);
 
         datosGrafico.filter((item) => {
           if (item.Valoracion_Riesgo == 'Controlado') {
@@ -294,18 +375,47 @@
             }
           }
         }
+        tabla.style.display = 'none';
         generarGrafico();
+        if (
+            departamento.value!="" &&
+            provincia.value!="" &&
+            distrito.value!="" &&
+            edad.value=="" &&
+            ladosis.value=="" &&
+            mes.value=="" &&
+            quincena.value==""
+          ){
+            generarTabla(datosTabla);
+          }
       }
       function generarGrafico() {
-        if (window.grafico) {
-          window.grafico.clear();
-          window.grafico.destroy();
+        if (window.todos) {
+          window.todos.clear();
+          window.todos.destroy();
         }
-        window.grafico = new Chart(
+        window.todos = new Chart(
             grafica,
             config
           );
-          console.log(datosFiltrados);
+          // console.log(datosFiltrados);
+        }
+        function generarTabla(datostabla) {
+          cadena="";
+          tabla.style.display = '';
+          detalletabla.innerHTML = '';
+          datostabla.forEach(element => {
+            cadena += `
+                <tr>
+                  <td scope="row">${element.G_EDAD}</td>
+                  <td>${element.numVacunas}</td>
+                  <td>${element.MES}</td>
+                  <td>${element.QUINCENA}</td>
+                  <td>${element.Valoracion_Riesgo}</td>
+                </tr>
+                `;
+          });
+          detalletabla.innerHTML = cadena;
         }
     </script>
   </body>
