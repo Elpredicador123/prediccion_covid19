@@ -85,6 +85,11 @@
           <canvas id="myChart"></canvas>
         </div>
       </div>
+      <div class="row mb-3" id="grafico_02" style="display:none;">
+        <div class="col-11 mx-auto" style="height: 60vh;">
+          <canvas id="myChart02"></canvas>
+        </div>
+      </div>
       <div class="row mb-3" id="tabla" style="display:none;">
         <div class="col-11 mx-auto table-responsive">
           <table class="table">
@@ -125,6 +130,8 @@
       quincena = document.getElementById('quincena');
       botongrafico = document.getElementById('botongrafico');
       grafica = document.getElementById('myChart')
+      grafica02 = document.getElementById('myChart02')
+      contenedorgrafica02 = document.getElementById('grafico_02')
       tabla = document.getElementById('tabla')
       detalletabla = document.getElementById('detalletabla')
 
@@ -143,6 +150,8 @@
       medio=[];
       alto=[];
       muyalto=[];
+      casospositivosq1=[];
+      casospositivosq2=[];
       datosFiltrados=[];
       datosTabla=[];
 
@@ -253,7 +262,8 @@
         muyalto=[];
         datosFiltrados=[];
         datosTabla=[];
-
+        casospositivosq1=[];
+        casospositivosq2=[];
         datos.filter((item) => {
           //todos los campos
           if (
@@ -318,7 +328,31 @@
           }
         });
         console.log(datosTabla);
+        m1q1=0;
+        m2q1=0;
+        m3q1=0;
+        m4q1=0;
+        m5q1=0;
+        m6q1=0;
+        m7q1=0;
+        m8q1=0;
+        m9q1=0;
+        m10q1=0;
+        m11q1=0;
+        m12q1=0;
 
+        m1q2=0;
+        m2q2=0;
+        m3q2=0;
+        m4q2=0;
+        m5q2=0;
+        m6q2=0;
+        m7q2=0;
+        m8q2=0;
+        m9q2=0;
+        m10q2=0;
+        m11q2=0;
+        m12q2=0;
         datosGrafico.filter((item) => {
           if (item.Valoracion_Riesgo == 'Controlado') {
             controlado.push(item);
@@ -335,9 +369,69 @@
           if (item.Valoracion_Riesgo == 'Muy Alto') {
             muyalto.push(item);
           }
+          if (item.MES == 1 && item.QUINCENA == 1){m1q1+=item.CASOS_POSITIVOS}
+          if (item.MES == 2 && item.QUINCENA == 1){m2q1+=item.CASOS_POSITIVOS}
+          if (item.MES == 3 && item.QUINCENA == 1){m3q1+=item.CASOS_POSITIVOS}
+          if (item.MES == 4 && item.QUINCENA == 1){m4q1+=item.CASOS_POSITIVOS}
+          if (item.MES == 5 && item.QUINCENA == 1){m5q1+=item.CASOS_POSITIVOS}
+          if (item.MES == 6 && item.QUINCENA == 1){m6q1+=item.CASOS_POSITIVOS}
+          if (item.MES == 7 && item.QUINCENA == 1){m7q1+=item.CASOS_POSITIVOS}
+          if (item.MES == 8 && item.QUINCENA == 1){m8q1+=item.CASOS_POSITIVOS}
+          if (item.MES == 9 && item.QUINCENA == 1){m9q1+=item.CASOS_POSITIVOS}
+          if (item.MES == 10 && item.QUINCENA == 1){m10q1+=item.CASOS_POSITIVOS}
+          if (item.MES == 11 && item.QUINCENA == 1){m11q1+=item.CASOS_POSITIVOS}
+          if (item.MES == 12 && item.QUINCENA == 1){m12q1+=item.CASOS_POSITIVOS}
+          
+          if (item.MES == 1 && item.QUINCENA == 2){m1q2+=item.CASOS_POSITIVOS}
+          if (item.MES == 2 && item.QUINCENA == 2){m2q2+=item.CASOS_POSITIVOS}
+          if (item.MES == 3 && item.QUINCENA == 2){m3q2+=item.CASOS_POSITIVOS}
+          if (item.MES == 4 && item.QUINCENA == 2){m4q2+=item.CASOS_POSITIVOS}
+          if (item.MES == 5 && item.QUINCENA == 2){m5q2+=item.CASOS_POSITIVOS}
+          if (item.MES == 6 && item.QUINCENA == 2){m6q2+=item.CASOS_POSITIVOS}
+          if (item.MES == 7 && item.QUINCENA == 2){m7q2+=item.CASOS_POSITIVOS}
+          if (item.MES == 8 && item.QUINCENA == 2){m8q2+=item.CASOS_POSITIVOS}
+          if (item.MES == 9 && item.QUINCENA == 2){m9q2+=item.CASOS_POSITIVOS}
+          if (item.MES == 10 && item.QUINCENA == 2){m10q2+=item.CASOS_POSITIVOS}
+          if (item.MES == 11 && item.QUINCENA == 2){m11q2+=item.CASOS_POSITIVOS}
+          if (item.MES == 12 && item.QUINCENA == 2){m12q2+=item.CASOS_POSITIVOS}
+          
         });
+        casospositivosq1.push(m1q1,m2q1,m3q1,m4q1,m5q1,m6q1,m7q1,m8q1,m9q1,m10q1,m11q1,m12q1);
+        casospositivosq2.push(m1q2,m2q2,m3q2,m4q2,m5q2,m6q2,m7q2,m8q2,m9q2,m10q2,m11q2,m12q2);
+
         datosFiltrados.push(controlado.length,bajo.length,medio.length,alto.length,muyalto.length);
 
+        grafico01();
+        grafico02();
+
+        tabla.style.display = 'none';
+        contenedorgrafica02.style.display = 'none';
+
+        generarGrafico();
+        if (
+            departamento.value!="" &&
+            provincia.value!="" &&
+            distrito.value!="" &&
+            edad.value=="" &&
+            ladosis.value=="" &&
+            mes.value=="" &&
+            quincena.value==""
+          ){
+            generarTabla(datosTabla);
+          }
+        if (
+            departamento.value!="" &&
+            provincia.value!="" &&
+            distrito.value!="" &&
+            edad.value!="" &&
+            ladosis.value!="" &&
+            mes.value=="" &&
+            quincena.value==""
+          ){
+            generarGrafico02();
+          }
+      }
+      function grafico01() {
         const labels = [
           "Controlado",
           "Bajo",
@@ -350,11 +444,11 @@
         datasets: [{
             label: 'Datos',
             backgroundColor: [
-              'rgb(0, 230, 230)',
-              'rgb(127, 230, 0)',
-              'rgb(230, 230, 0)',
-              'rgb(230, 127, 0)',
-              'rgb(230, 0, 0)'
+              'rgb(0, 210, 210)',
+              'rgb(127, 210, 0)',
+              'rgb(210, 210, 0)',
+              'rgb(210, 127, 0)',
+              'rgb(210, 0, 0)'
             ],
             borderColor: 'rgb(255, 255, 255)',
             hoverOffset: 4,
@@ -375,21 +469,73 @@
             }
           }
         }
-        tabla.style.display = 'none';
-        generarGrafico();
-        if (
-            departamento.value!="" &&
-            provincia.value!="" &&
-            distrito.value!="" &&
-            edad.value=="" &&
-            ladosis.value=="" &&
-            mes.value=="" &&
-            quincena.value==""
-          ){
-            generarTabla(datosTabla);
-          }
+      }
+
+      function grafico02() {
+        const datosfiltrados01 = {
+            label: "Primera Quincena",
+            data: casospositivosq1, // La data es un arreglo que debe tener la misma cantidad de valores que la cantidad de etiquetas
+            backgroundColor: 'rgba(50, 235, 0, 0.2)', // Color de fondo
+            borderColor: 'rgba(54, 162, 235, 1)', // Color del borde
+            borderWidth: 1,// Ancho del borde
+        };
+        const datosfiltrados02 = {
+            label: "Segunda Quincena",
+            data: casospositivosq2, // La data es un arreglo que debe tener la misma cantidad de valores que la cantidad de etiquetas
+            backgroundColor: 'rgba(0, 0, 235, 0.2)', // Color de fondo
+            borderColor: 'rgba(54, 162, 235, 1)', // Color del borde
+            borderWidth: 1,// Ancho del borde
+        };
+        labels02 = [
+          'Enero',
+          'Febrero',
+          'Marzo',
+          'Abril',
+          'Mayo',
+          'Junio',
+          'Julio',
+          'Agosto',
+          'Septiembre',
+          'Octubre',
+          'Noviembre',
+          'Diciembre'
+        ];
+        data02 = {
+          labels: labels02,
+          datasets: [
+            datosfiltrados01,
+            datosfiltrados02
+          ]
+        };
+         config02 = {
+          type: 'bar',
+          data: data02,
+          options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                    }
+                }]
+            },
+            responsive:true,
+            maintainAspectRatio:false,
+            plugins: {
+              title:{
+                display:true,
+                text:'Cantidad de contagiados',
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          },
+        };
       }
       function generarGrafico() {
+
         if (window.todos) {
           window.todos.clear();
           window.todos.destroy();
@@ -399,6 +545,18 @@
             config
           );
           // console.log(datosFiltrados);
+        }
+      function generarGrafico02() {
+        contenedorgrafica02.style.display = '';
+        if (window.todos02) {
+          window.todos02.clear();
+          window.todos02.destroy();
+        }
+        window.todos02 = new Chart(
+            grafica02,
+            config02
+          );
+          console.log(datosFiltrados);
         }
         function generarTabla(datostabla) {
           cadena="";
@@ -411,7 +569,14 @@
                   <td>${element.numVacunas}</td>
                   <td>${element.MES}</td>
                   <td>${element.QUINCENA}</td>
-                  <td>${element.Valoracion_Riesgo}</td>
+
+                  <td style="font-weight:bold; color:
+                  ${element.Valoracion_Riesgo == 'Controlado' ? 'rgb(0, 210, 210)' : ''}
+                  ${element.Valoracion_Riesgo == 'Bajo' ? 'rgb(127, 210, 0)' : ''}
+                  ${element.Valoracion_Riesgo == 'Medio' ? 'rgb(210, 210, 0)' : ''}
+                  ${element.Valoracion_Riesgo == 'Alto' ? 'rgb(210, 127, 0)' : ''}
+                  ${element.Valoracion_Riesgo == 'Muy Alto' ? 'rgb(210, 0, 0)' : ''}
+                  ">${element.Valoracion_Riesgo}</td>
                 </tr>
                 `;
           });
