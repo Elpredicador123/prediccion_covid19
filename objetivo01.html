@@ -202,11 +202,13 @@
           
         });
         }
+
         resultado = _.groupBy(datos_grafico,"periodo")
         //recorrer el objeto 
         for (const key in resultado) {
           if (Object.hasOwnProperty.call(resultado, key)) {
             const element = resultado[key];
+            // console.log(element);
             element.forEach((item)=>{
               labels02.push(item.mes)
             })
@@ -221,8 +223,8 @@
             });
           }
         }
-        console.log(datasets_grafico)
-        console.log(labels02)
+        // console.log(datasets_grafico)
+        // console.log(labels02)
         grafico02();
         generarGrafico02();
       }
