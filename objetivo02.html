@@ -45,50 +45,50 @@
               <div class="row ">
                 <h3 class="col-12 my-4 text-center">Enfermedades de la persona (antecedentes o actuales)</h3>
                 <div class="form-group col-md-6">
-                  <div class="form-check">
+                  <!-- <div class="form-check">
                     <label class="form-check-label">
                       <input type="checkbox" class="form-check-input" name="morbilidad[]" id="anemia">
                       Anemia
                     </label>
-                  </div>
+                  </div> -->
                   <div class="form-check">
                     <label class="form-check-label">
                       <input type="checkbox" class="form-check-input" name="morbilidad[]" id="enfermedadRenal">
                       Enfermedad renal
                     </label>
                   </div>
-                  <div class="form-check">
+                  <!-- <div class="form-check">
                     <label class="form-check-label">
                       <input type="checkbox" class="form-check-input" name="morbilidad[]" id="obesidad">
                       Obesidad
                     </label>
-                  </div>
-                  <div class="form-check">
+                  </div> -->
+                  <!-- <div class="form-check">
                     <label class="form-check-label">
                       <input type="checkbox" class="form-check-input" name="morbilidad[]" id="diabetes">
                       Diabetes
                     </label>
-                  </div>
+                  </div> -->
                 </div>
                 <div class="form-group col-md-6">
-                  <div class="form-check">
+                  <!-- <div class="form-check">
                     <label class="form-check-label">
                       <input type="checkbox" class="form-check-input" name="morbilidad[]" id="enfermedadOncologica">
                       Enfermedad oncologica
                     </label>
-                  </div>
+                  </div> -->
                   <div class="form-check">
                     <label class="form-check-label">
                       <input type="checkbox" class="form-check-input" name="morbilidad[]" id="enfermedadPulmonar">
                       Enfermedad pulmonar
                     </label>
                   </div>
-                  <div class="form-check">
+                  <!-- <div class="form-check">
                     <label class="form-check-label">
                       <input type="checkbox" class="form-check-input" name="morbilidad[]" id="enfermedadCardiaca">
                       Enfermedad cardiaca
                     </label>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -140,18 +140,18 @@
                     </div>
                   </div>
                   <div class="form-group col-md-6">
-                    <div class="form-check">
+                    <!-- <div class="form-check">
                       <label class="form-check-label">
                         <input type="checkbox" class="form-check-input" name="morbilidad[]" id="nauseas">
                         Nauseas
                       </label>
-                    </div>
-                    <div class="form-check">
+                    </div> -->
+                    <!-- <div class="form-check">
                       <label class="form-check-label">
                         <input type="checkbox" class="form-check-input" name="morbilidad[]" id="anosmia_hiposmia">
                         Anosmia hiposmia
                       </label>
-                    </div>
+                    </div> -->
                     <div class="form-check">
                       <label class="form-check-label">
                         <input type="checkbox" class="form-check-input" name="morbilidad[]" id="dolor_abdominal">
@@ -170,18 +170,18 @@
                         Dolor muscular
                       </label>
                     </div>
-                    <div class="form-check">
+                    <!-- <div class="form-check">
                       <label class="form-check-label">
                         <input type="checkbox" class="form-check-input" name="morbilidad[]" id="dolor_pecho">
                         Dolor pecho
                       </label>
-                    </div>
-                    <div class="form-check">
+                    </div> -->
+                    <!-- <div class="form-check">
                       <label class="form-check-label">
                         <input type="checkbox" class="form-check-input" name="morbilidad[]" id="otros_sintomas">
                         Otros sintomas
                       </label>
-                    </div>
+                    </div> -->
                   </div>
               </div>
             </div>
@@ -255,20 +255,20 @@
               datoexcel.dolor_garganta == datosselect.dolor_garganta &&
               datoexcel.fiebre == datosselect.fiebre &&
               datoexcel.diarrea == datosselect.diarrea &&
-              datoexcel.nauseas == datosselect.nauseas &&
-              datoexcel.anosmia_hiposmia == datosselect.anosmia_hiposmia &&
+              datoexcel.nauseas == 0 &&
+              datoexcel.anosmia_hiposmia == 0 &&
               datoexcel.dolor_abdominal == datosselect.dolor_abdominal &&
               datoexcel.dolor_articulaciones == datosselect.dolor_articulaciones &&
               datoexcel.dolor_muscular == datosselect.dolor_muscular &&
-              datoexcel.dolor_pecho == datosselect.dolor_pecho &&
-              datoexcel.otros_sintomas == datosselect.otros_sintomas &&
-              datoexcel.anemia == datosselect.anemia &&
+              datoexcel.dolor_pecho == 0 &&
+              datoexcel.otros_sintomas == 0 &&
+              datoexcel.anemia == 0 &&
               datoexcel.enfermedadRenal == datosselect.enfermedadRenal &&
-              datoexcel.obesidad == datosselect.obesidad &&
-              datoexcel.diabetes == datosselect.diabetes &&
-              datoexcel.enfermedadOncologica == datosselect.enfermedadOncologica &&
+              datoexcel.obesidad == 0 &&
+              datoexcel.diabetes == 0 &&
+              datoexcel.enfermedadOncologica == 0 &&
               datoexcel.enfermedadPulmonar == datosselect.enfermedadPulmonar &&
-              datoexcel.enfermedadCardiaca == datosselect.enfermedadCardiaca && 
+              datoexcel.enfermedadCardiaca == 0 && 
               datoexcel.muerte == 1
             ) {
               if (sexo.value != "" && edad.value != "") {
