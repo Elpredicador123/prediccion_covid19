@@ -154,6 +154,8 @@
       casospositivosq2=[];
       datosFiltrados=[];
       datosTabla=[];
+      coloresq1=[];
+      coloresq2=[];
 
       data={};
       config={};
@@ -353,6 +355,10 @@
         m10q2=0;
         m11q2=0;
         m12q2=0;
+
+        coloresq1=[];
+        coloresq2=[];
+        
         datosGrafico.filter((item) => {
           if (item.Valoracion_Riesgo == 'Controlado') {
             controlado.push(item);
@@ -369,31 +375,31 @@
           if (item.Valoracion_Riesgo == 'Muy Alto') {
             muyalto.push(item);
           }
-          if (item.MES == 1 && item.QUINCENA == 1){m1q1+=item.CASOS_POSITIVOS}
-          if (item.MES == 2 && item.QUINCENA == 1){m2q1+=item.CASOS_POSITIVOS}
-          if (item.MES == 3 && item.QUINCENA == 1){m3q1+=item.CASOS_POSITIVOS}
-          if (item.MES == 4 && item.QUINCENA == 1){m4q1+=item.CASOS_POSITIVOS}
-          if (item.MES == 5 && item.QUINCENA == 1){m5q1+=item.CASOS_POSITIVOS}
-          if (item.MES == 6 && item.QUINCENA == 1){m6q1+=item.CASOS_POSITIVOS}
-          if (item.MES == 7 && item.QUINCENA == 1){m7q1+=item.CASOS_POSITIVOS}
-          if (item.MES == 8 && item.QUINCENA == 1){m8q1+=item.CASOS_POSITIVOS}
-          if (item.MES == 9 && item.QUINCENA == 1){m9q1+=item.CASOS_POSITIVOS}
-          if (item.MES == 10 && item.QUINCENA == 1){m10q1+=item.CASOS_POSITIVOS}
-          if (item.MES == 11 && item.QUINCENA == 1){m11q1+=item.CASOS_POSITIVOS}
-          if (item.MES == 12 && item.QUINCENA == 1){m12q1+=item.CASOS_POSITIVOS}
+          if (item.MES == 1 && item.QUINCENA == 1){m1q1+=item.CASOS_POSITIVOS;guardarColor(item.Valoracion_Riesgo,1);}
+          if (item.MES == 2 && item.QUINCENA == 1){m2q1+=item.CASOS_POSITIVOS;guardarColor(item.Valoracion_Riesgo,1);}
+          if (item.MES == 3 && item.QUINCENA == 1){m3q1+=item.CASOS_POSITIVOS;guardarColor(item.Valoracion_Riesgo,1);}
+          if (item.MES == 4 && item.QUINCENA == 1){m4q1+=item.CASOS_POSITIVOS;guardarColor(item.Valoracion_Riesgo,1);}
+          if (item.MES == 5 && item.QUINCENA == 1){m5q1+=item.CASOS_POSITIVOS;guardarColor(item.Valoracion_Riesgo,1);}
+          if (item.MES == 6 && item.QUINCENA == 1){m6q1+=item.CASOS_POSITIVOS;guardarColor(item.Valoracion_Riesgo,1);}
+          if (item.MES == 7 && item.QUINCENA == 1){m7q1+=item.CASOS_POSITIVOS;guardarColor(item.Valoracion_Riesgo,1);}
+          if (item.MES == 8 && item.QUINCENA == 1){m8q1+=item.CASOS_POSITIVOS;guardarColor(item.Valoracion_Riesgo,1);}
+          if (item.MES == 9 && item.QUINCENA == 1){m9q1+=item.CASOS_POSITIVOS;guardarColor(item.Valoracion_Riesgo,1);}
+          if (item.MES == 10 && item.QUINCENA == 1){m10q1+=item.CASOS_POSITIVOS;guardarColor(item.Valoracion_Riesgo,1);}
+          if (item.MES == 11 && item.QUINCENA == 1){m11q1+=item.CASOS_POSITIVOS;guardarColor(item.Valoracion_Riesgo,1);}
+          if (item.MES == 12 && item.QUINCENA == 1){m12q1+=item.CASOS_POSITIVOS;guardarColor(item.Valoracion_Riesgo,1);}
           
-          if (item.MES == 1 && item.QUINCENA == 2){m1q2+=item.CASOS_POSITIVOS}
-          if (item.MES == 2 && item.QUINCENA == 2){m2q2+=item.CASOS_POSITIVOS}
-          if (item.MES == 3 && item.QUINCENA == 2){m3q2+=item.CASOS_POSITIVOS}
-          if (item.MES == 4 && item.QUINCENA == 2){m4q2+=item.CASOS_POSITIVOS}
-          if (item.MES == 5 && item.QUINCENA == 2){m5q2+=item.CASOS_POSITIVOS}
-          if (item.MES == 6 && item.QUINCENA == 2){m6q2+=item.CASOS_POSITIVOS}
-          if (item.MES == 7 && item.QUINCENA == 2){m7q2+=item.CASOS_POSITIVOS}
-          if (item.MES == 8 && item.QUINCENA == 2){m8q2+=item.CASOS_POSITIVOS}
-          if (item.MES == 9 && item.QUINCENA == 2){m9q2+=item.CASOS_POSITIVOS}
-          if (item.MES == 10 && item.QUINCENA == 2){m10q2+=item.CASOS_POSITIVOS}
-          if (item.MES == 11 && item.QUINCENA == 2){m11q2+=item.CASOS_POSITIVOS}
-          if (item.MES == 12 && item.QUINCENA == 2){m12q2+=item.CASOS_POSITIVOS}
+          if (item.MES == 1 && item.QUINCENA == 2){m1q2+=item.CASOS_POSITIVOS;guardarColor(item.Valoracion_Riesgo,2);}
+          if (item.MES == 2 && item.QUINCENA == 2){m2q2+=item.CASOS_POSITIVOS;guardarColor(item.Valoracion_Riesgo,2);}
+          if (item.MES == 3 && item.QUINCENA == 2){m3q2+=item.CASOS_POSITIVOS;guardarColor(item.Valoracion_Riesgo,2);}
+          if (item.MES == 4 && item.QUINCENA == 2){m4q2+=item.CASOS_POSITIVOS;guardarColor(item.Valoracion_Riesgo,2);}
+          if (item.MES == 5 && item.QUINCENA == 2){m5q2+=item.CASOS_POSITIVOS;guardarColor(item.Valoracion_Riesgo,2);}
+          if (item.MES == 6 && item.QUINCENA == 2){m6q2+=item.CASOS_POSITIVOS;guardarColor(item.Valoracion_Riesgo,2);}
+          if (item.MES == 7 && item.QUINCENA == 2){m7q2+=item.CASOS_POSITIVOS;guardarColor(item.Valoracion_Riesgo,2);}
+          if (item.MES == 8 && item.QUINCENA == 2){m8q2+=item.CASOS_POSITIVOS;guardarColor(item.Valoracion_Riesgo,2);}
+          if (item.MES == 9 && item.QUINCENA == 2){m9q2+=item.CASOS_POSITIVOS;guardarColor(item.Valoracion_Riesgo,2);}
+          if (item.MES == 10 && item.QUINCENA == 2){m10q2+=item.CASOS_POSITIVOS;guardarColor(item.Valoracion_Riesgo,2);}
+          if (item.MES == 11 && item.QUINCENA == 2){m11q2+=item.CASOS_POSITIVOS;guardarColor(item.Valoracion_Riesgo,2);}
+          if (item.MES == 12 && item.QUINCENA == 2){m12q2+=item.CASOS_POSITIVOS;guardarColor(item.Valoracion_Riesgo,2);}
           
         });
         casospositivosq1.push(m1q1,m2q1,m3q1,m4q1,m5q1,m6q1,m7q1,m8q1,m9q1,m10q1,m11q1,m12q1);
@@ -475,14 +481,14 @@
         const datosfiltrados01 = {
             label: "Primera Quincena",
             data: casospositivosq1, // La data es un arreglo que debe tener la misma cantidad de valores que la cantidad de etiquetas
-            backgroundColor: 'rgba(50, 235, 0, 0.2)', // Color de fondo
+            backgroundColor: coloresq1, // Color de fondo
             borderColor: 'rgba(54, 162, 235, 1)', // Color del borde
             borderWidth: 1,// Ancho del borde
         };
         const datosfiltrados02 = {
             label: "Segunda Quincena",
             data: casospositivosq2, // La data es un arreglo que debe tener la misma cantidad de valores que la cantidad de etiquetas
-            backgroundColor: 'rgba(0, 0, 235, 0.2)', // Color de fondo
+            backgroundColor: coloresq2, // Color de fondo
             borderColor: 'rgba(54, 162, 235, 1)', // Color del borde
             borderWidth: 1,// Ancho del borde
         };
@@ -534,6 +540,23 @@
           },
         };
       }
+      function guardarColor(riesgo,q) {
+        if(q==1){
+          if (riesgo == "Controlado") {coloresq1.push('rgb(0, 210, 210)')}
+          if (riesgo == "Bajo") {coloresq1.push('rgb(127, 210, 0)')}
+          if (riesgo == "Medio") {coloresq1.push('rgb(210, 210, 0)')}
+          if (riesgo == "Alto") {coloresq1.push('rgb(210, 127, 0)')}
+          if (riesgo == "Muy Alto") {coloresq1.push('rgb(210, 0, 0)')}
+        }
+        if(q==2){
+          if (riesgo == "Controlado") {coloresq2.push('rgb(0, 210, 210)')}
+          if (riesgo == "Bajo") {coloresq2.push('rgb(127, 210, 0)')}
+          if (riesgo == "Medio") {coloresq2.push('rgb(210, 210, 0)')}
+          if (riesgo == "Alto") {coloresq2.push('rgb(210, 127, 0)')}
+          if (riesgo == "Muy Alto") {coloresq2.push('rgb(210, 0, 0)')}
+        }
+      }
+
       function generarGrafico() {
 
         if (window.todos) {

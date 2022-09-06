@@ -9,7 +9,7 @@
   <body>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12 text-center py-5 bg-info text-light">
+            <div class="col-12 text-center py-4 bg-info text-light">
                 <h1>Formulario de prediccion objetivo 02</h1>
                 <div class="row">
                     <div class="col-12 mt-3">
@@ -18,11 +18,299 @@
                 </div>
             </div>
         </div>
-        <div class="row" >
-            FORMULARIO
-        </div>
+        <div class="row">
+          <div class="col-12 text-center pt-4">
+              <h3>Datos generales de la persona</h3>
+          </div>
+      </div>
+        <form class="row py-3 px-5">
+          <div class="form-group col-md-4 offset-md-2">
+              <label for="sexo" class="col-form-label">Sexo</label>
+              <div class="col-12">
+                  <select type="text" class="form-control" name="sexo" id="sexo">
+                    <option value="">Seleccionar</option>
+                    <option value="F">Femenino</option>
+                    <option value="M">Masculino</option>
+                  </select>
+              </div>
+          </div>
+          <div class="form-group col-md-4">
+              <label for="edad" class="col-form-label">Edad</label>
+              <div class="col-12">
+                  <input type="number" min="0" max="100" class="form-control" name="edad" id="edad">
+              </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <div class="row ">
+                <h3 class="col-12 my-4 text-center">Enfermedades de la persona (antecedentes o actuales)</h3>
+                <div class="form-group col-md-6">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" name="morbilidad[]" id="anemia">
+                      Anemia
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" name="morbilidad[]" id="enfermedadRenal">
+                      Enfermedad renal
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" name="morbilidad[]" id="obesidad">
+                      Obesidad
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" name="morbilidad[]" id="diabetes">
+                      Diabetes
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" name="morbilidad[]" id="enfermedadOncologica">
+                      Enfermedad oncologica
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" name="morbilidad[]" id="enfermedadPulmonar">
+                      Enfermedad pulmonar
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" name="morbilidad[]" id="enfermedadCardiaca">
+                      Enfermedad cardiaca
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="row">
+                  <h3 class="col-12 my-4 text-center">Sintomas</h3>
+                  <div class="form-group col-md-6">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" name="morbilidad[]" id="tos">
+                        Tos
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" name="morbilidad[]" id="cefalea">
+                        Cefalea
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" name="morbilidad[]" id="congestion_nasal">
+                        Congestion nasal
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" name="morbilidad[]" id="dificultad_respiratoria">
+                        Dificultad respiratoria
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" name="morbilidad[]" id="dolor_garganta">
+                        Dolor de garganta
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" name="morbilidad[]" id="fiebre">
+                        Fiebre
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" name="morbilidad[]" id="diarrea">
+                        Diarrea
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" name="morbilidad[]" id="nauseas">
+                        Nauseas
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" name="morbilidad[]" id="anosmia_hiposmia">
+                        Anosmia hiposmia
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" name="morbilidad[]" id="dolor_abdominal">
+                        Dolor abdominal
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" name="morbilidad[]" id="dolor_articulaciones">
+                        Dolor articulaciones
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" name="morbilidad[]" id="dolor_muscular">
+                        Dolor muscular
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" name="morbilidad[]" id="dolor_pecho">
+                        Dolor pecho
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" name="morbilidad[]" id="otros_sintomas">
+                        Otros sintomas
+                      </label>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="row my-2">
+            <div class="form-group col-6 col-md-3 my-2" id="boton" style="display: none;">
+                <a onclick="consultar();" class="btn btn-primary">Respuesta</a>
+            </div>
+            <div class="form-group col-6 col-md-3 my-2" id="resultado">
+                
+            </div>
+          </div>
+      </form>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="./PapaParse-5.0.2/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+
+      sexo = document.getElementById("sexo");
+      edad = document.getElementById("edad");
+      morbilidad_array = document.getElementsByName("morbilidad[]");
+      boton = document.getElementById("boton");
+      resultado = document.getElementById("resultado");
+
+      morbilidades = {};
+      datos_cargados=[];
+      datos_filtrados=[];
+
+      function consultar() {
+        morbilidades = {};
+        llenarMorbilidades(morbilidad_array);
+        console.log(morbilidades);
+        filtrarDatos(datos_cargados,morbilidades);
+        generarResultado(datos_filtrados.length);
+      }
+
+      function llenarMorbilidades(datos) {
+        datos.forEach((dato) => {
+          morbilidades= {...morbilidades,...{[dato.id]:(dato.checked)?1:0}};
+        });
+      }
+
+      const url = 'OBJ2_PREDICCION_COMPLETO.csv';
+      Papa.parse(url, {
+          download: true,
+          header: true,
+          dynamicTyping: true,
+          complete: function(results) {
+            datos_cargados = results.data;
+            console.log(datos_cargados[10]);
+            boton.style.display = '';
+          }
+      });
+
+      function limpiarCampos(datos) {
+        datos.forEach((dato) => {
+          dato.checked = false;
+        });
+      }
+
+      function filtrarDatos(datosexcel,datosselect) {
+        datos_filtrados=[];
+        datosexcel.forEach((datoexcel) => {
+            if (
+              datoexcel.tos == datosselect.tos &&
+              datoexcel.cefalea == datosselect.cefalea &&
+              datoexcel.congestion_nasal == datosselect.congestion_nasal &&
+              datoexcel.dificultad_respiratoria == datosselect.dificultad_respiratoria &&
+              datoexcel.dolor_garganta == datosselect.dolor_garganta &&
+              datoexcel.fiebre == datosselect.fiebre &&
+              datoexcel.diarrea == datosselect.diarrea &&
+              datoexcel.nauseas == datosselect.nauseas &&
+              datoexcel.anosmia_hiposmia == datosselect.anosmia_hiposmia &&
+              datoexcel.dolor_abdominal == datosselect.dolor_abdominal &&
+              datoexcel.dolor_articulaciones == datosselect.dolor_articulaciones &&
+              datoexcel.dolor_muscular == datosselect.dolor_muscular &&
+              datoexcel.dolor_pecho == datosselect.dolor_pecho &&
+              datoexcel.otros_sintomas == datosselect.otros_sintomas &&
+              datoexcel.anemia == datosselect.anemia &&
+              datoexcel.enfermedadRenal == datosselect.enfermedadRenal &&
+              datoexcel.obesidad == datosselect.obesidad &&
+              datoexcel.diabetes == datosselect.diabetes &&
+              datoexcel.enfermedadOncologica == datosselect.enfermedadOncologica &&
+              datoexcel.enfermedadPulmonar == datosselect.enfermedadPulmonar &&
+              datoexcel.enfermedadCardiaca == datosselect.enfermedadCardiaca && 
+              datoexcel.muerte == 1
+            ) {
+              if (sexo.value != "" && edad.value != "") {
+                if (datoexcel.sexo == sexo.value && datoexcel.edad == edad.value) {
+                  console.log("todo");
+                  datos_filtrados.push(datoexcel);
+                }
+              }else if (edad.value != "") {
+                if (datoexcel.edad == edad.value) {
+                  console.log("todo menos sexo");
+                  datos_filtrados.push(datoexcel);
+                }
+              }else if (sexo.value != "") {
+                if (datoexcel.sexo == sexo.value) {
+                  console.log("todo menos edad");
+                  datos_filtrados.push(datoexcel);
+                }
+              }else {
+                console.log("todo menos sexo y edad");
+                datos_filtrados.push(datoexcel);
+              }
+            }
+        });
+        // console.log(datos_filtrados.length);
+        
+        // console.log(datos_filtrados);
+      }
+
+      //RESPUESTA*********************************************************************************************************************
+
+        function generarResultado(tamaño) {
+          if (tamaño>0) {
+            resultado.innerHTML = `
+            <p>Resultado: <span class="badge bg-primary"> Si muere</span></p>
+            `;
+          }else if (tamaño==0) {
+            resultado.innerHTML = `
+            <p>Resultado: <span class="badge bg-primary"> No muere</span></p>
+            `;
+          }
+        }
+
+    </script>
   </body>
 </html>
