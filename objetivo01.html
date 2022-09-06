@@ -9,7 +9,7 @@
   <body>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12 text-center py-5 bg-info text-light">
+            <div class="col-12 text-center py-4 bg-info text-light">
                 <h1>Formulario de prediccion objetivo 01</h1>
                 <div class="row">
                     <div class="col-12 mt-3">
@@ -18,11 +18,261 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            FORMULARIO
+        <form class="row py-3 px-5">
+          <div class="form-group col-md-4">
+            <label for="departamento" class="col-form-label">Departamento</label>
+            <div class="col-12">
+                <select type="text" class="form-control" name="departamento" id="departamento">
+                  
+                </select>
+            </div>
+
         </div>
+        <div class="form-group col-md-4">
+            <label for="provincia" class="col-form-label">Provincia</label>
+            <div class="col-12">
+                <select type="text" class="form-control" name="provincia" id="provincia" disabled>
+                  
+                </select>
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="distrito" class="col-form-label">Distrito</label>
+            <div class="col-12">
+                <select type="text" class="form-control" name="distrito" id="distrito" disabled>
+                  
+                </select>
+            </div>
+        </div>
+          <div class="form-group col-md-4">
+              <label for="tipo_vacuna" class="col-form-label">Tipo Prueba</label>
+              <div class="col-12">
+                  <select type="text" class="form-control" name="tipo_vacuna" id="tipo_vacuna" disabled>
+                    
+                  </select>
+              </div>
+          </div>
+          <div class="form-group col-12 my-2">
+              <a id="botongrafico" onclick="llenarDatosGrafico();" class="btn btn-primary">Generar Grafico</a>
+          </div>
+      </form>
+      <div class="row mb-3" id="grafico_01">
+        <div class="col-11 mx-auto" style="height: 60vh;">
+          <canvas id="myChart"></canvas>
+        </div>
+      </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="./PapaParse-5.0.2/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
+    <script>
+      departamento = document.getElementById('departamento');
+      provincia = document.getElementById('provincia');
+      distrito = document.getElementById('distrito');
+      tipo_vacuna = document.getElementById('tipo_vacuna');
+      grafica02 = document.getElementById('myChart')
+
+      datos_resultado=[];
+      departamentos=[];
+      provincias=[];
+      distritos=[];
+      
+      tipo_vacunas=[];
+      datos_filtrados=[];
+      datos_grafico=[];
+      datasets_grafico=[];
+      labels02=[];
+
+      periodos_filtrados=[];
+      meses_filtrados=[];
+      tipo_vacunas_filtradas=[];
+
+      data={};
+      config={};
+      const url = 'OBJ1_PREDICCION_COMPLETO.csv';
+      Papa.parse(url, {
+          download: true,
+          header: true,
+          dynamicTyping: true,
+          complete: function(results) {
+            datos_resultado = results.data;
+            console.log(datos_resultado[0]);
+
+            llenarDepartamento(datos_resultado);
+            departamento.addEventListener('change', function(){
+              (departamento.value!="")?(llenarCampoDependiente(datos_resultado, [[departamento,'DEPARTAMENTO']], provincia, provincias ,'PROVINCIA'))
+              :(limpiarCampos([provincia]))
+              provincias=[], distritos=[], tipo_vacunas=[];
+              limpiarCampos([distrito, tipo_vacuna]);
+            });
+            provincia.addEventListener('change', function(){
+              (provincia.value!="")?(llenarCampoDependiente(datos_resultado, [[departamento,'DEPARTAMENTO'],[provincia, 'PROVINCIA']], distrito, distritos,'DISTRITO'))
+              :(limpiarCampos([distrito]))
+              distritos=[], tipo_vacunas=[];
+              limpiarCampos([tipo_vacuna]);
+            });
+            distrito.addEventListener('change', function(){
+              (distrito.value!="")?(llenarCampoDependiente(datos_resultado, [[departamento,'DEPARTAMENTO'],[provincia, 'PROVINCIA'],[distrito, 'DISTRITO']], tipo_vacuna, tipo_vacunas,'TIPO_PRUEBA'))
+              :(limpiarCampos([tipo_vacuna]))
+               tipo_vacunas=[];
+            });
+          }
+      });
+
+      function limpiarCampos(vector) {
+          vector.forEach(element => {
+            element.innerHTML="";
+            element.disabled = true;
+          });
+      }
+
+      function llenarDepartamento(datos) {
+        for (let i = 0; i < datos.length; i++) {
+              if (!departamentos.includes(datos[i].DEPARTAMENTO)) {
+                departamentos.push(datos[i].DEPARTAMENTO);
+              }
+            }
+        departamentos.sort();
+        departamento.innerHTML =`<option value="">Seleccionar</option>`
+        for (let i = 0; i < departamentos.length; i++) {
+          departamento.innerHTML += `<option value="${departamentos[i]}">${departamentos[i]}</option>`;
+        }
+      }
+
+      function verificarRecursivo(item, vector) {
+        if (vector.length == 0) {
+          return true;
+        } else {
+          if (item[vector[0][1]] == vector[0][0].value && verificarRecursivo(item, vector.slice(1))) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      }
+      
+      function llenarCampoDependiente(datos,camposSuperiores,campoInferior,vector,nombreAtributovectorInferior) {
+        datos.filter((item) => {
+            if (verificarRecursivo(item,camposSuperiores) ) {
+              if (!vector.includes(item[nombreAtributovectorInferior])) {
+                vector.push(item[nombreAtributovectorInferior]);
+              }
+            }
+        });
+        !isNaN(vector[0])?vector.sort((a,b)=>a-b):vector.sort();
+       campoInferior.innerHTML =`<option value="">Seleccionar</option>`
+        for (let i = 0; i < vector.length; i++) {
+          campoInferior.innerHTML += `<option value="${vector[i]}">${vector[i]}</option>`;
+        }
+        campoInferior.disabled = false;
+      }
+
+      //GRAFICA*********************************************************************************************************************
+      function llenarDatosGrafico(){
+        datos_grafico =[];
+        coloresq1=[];
+        coloresq2=[];
+        datasets_grafico=[];
+        periodos_filtrados=[];
+        meses_filtrados=[];
+        datos_filtrados=[];
+        datasets_grafico=[]
+        labels02=[];
+        if (
+          departamento.value!="" &&
+          provincia.value!="" &&
+          distrito.value!="" &&
+          tipo_vacuna.value!=""
+          ){
+          datos_resultado.filter((item) => {
+              if (verificarRecursivo(item,[[departamento,'DEPARTAMENTO'],[provincia, 'PROVINCIA'],[distrito, 'DISTRITO'],[tipo_vacuna, 'TIPO_PRUEBA']]) ) {
+                datos_filtrados.push(item);
+              }
+          });
+          for (let i = 0; i < datos_filtrados.length; i++) {
+            if (!periodos_filtrados.includes(datos_filtrados[i].ANIO)) {
+                    periodos_filtrados.push(datos_filtrados[i].ANIO);
+            }
+          }
+          !isNaN(periodos_filtrados[0])?periodos_filtrados.sort((a,b)=>a-b):periodos_filtrados.sort();
+          datos_filtrados.filter((item) => {
+                datos_grafico.push({periodo:item.ANIO,mes:item.MES,cantidad:Math.round(Math.abs(item.prediction))});
+          
+        });
+        }
+        resultado = _.groupBy(datos_grafico,"periodo")
+        //recorrer el objeto 
+        for (const key in resultado) {
+          if (Object.hasOwnProperty.call(resultado, key)) {
+            const element = resultado[key];
+            element.forEach((item)=>{
+              labels02.push(item.mes)
+            })
+            //color random  para cada periodo
+            color_cadena=`rgba(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},0.5)`
+            datasets_grafico.push({
+              label: key,
+              data: element.map((item)=>item.cantidad),
+              backgroundColor: color_cadena,
+              borderColor: color_cadena,
+              borderWidth: 1,
+            });
+          }
+        }
+        console.log(datasets_grafico)
+        console.log(labels02)
+        grafico02();
+        generarGrafico02();
+      }
+
+
+      function grafico02() {
+        data02 = {
+          labels: labels02,
+          datasets: datasets_grafico
+        };
+         config02 = {
+          type: 'bar',
+          data: data02,
+          options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                    }
+                }]
+            },
+            responsive:true,
+            maintainAspectRatio:false,
+            plugins: {
+              title:{
+                display:true,
+                text:'Cantidad de contagiados',
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          },
+        };
+      }
+
+      function generarGrafico02() {
+        if (window.todos02) {
+          window.todos02.clear();
+          window.todos02.destroy();
+        }
+        window.todos02 = new Chart(
+            grafica02,
+            config02
+          );
+
+        }
+
+    </script>
   </body>
 </html>
